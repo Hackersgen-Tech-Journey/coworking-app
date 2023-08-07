@@ -1,0 +1,4 @@
+{
+    "dsn": "host=postgres port=5432 user=postgres password=postgres dbname=coworkingapp sslmode=disable",
+    "secret_key": "3d75a1b578064b5f939e72e3b4e71366"
+}

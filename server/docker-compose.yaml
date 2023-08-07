@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  postgres:
+    build:
+      dockerfile: docker/db.Dockerfile
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: coworkingapp
+    ports:
+      - "5432:5432"
+  coworkingapp:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
