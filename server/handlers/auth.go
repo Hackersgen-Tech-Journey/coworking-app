@@ -36,8 +36,7 @@ func Login(c *gin.Context) {
 	secretKey := c.MustGet("ConfigKey").(models.CoworkingConfig).SecretKey
 	token, err := utils.GenerateToken(signedInUser.Email, []byte(secretKey))
 	if err != nil {
-		coworkingErr := err.(models.CoworkingErr)
-		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		c.JSON(http.StatusInternalServerError, models.CoworkingErr{Code: models.TokenGenerationErr, Message: err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"token": token})
@@ -49,5 +48,13 @@ func Signup(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, models.CoworkingErr{Code: models.ValidationErr, Message: err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, signupReq)
+	db := c.MustGet("DbKey").(*gorm.DB)
+	user := models.CoworkingUser{Email: signupReq.Email, Username: signupReq.Username, Password: signupReq.Password}
+	id, err := models.SignupUser(db, user)
+	if err != nil {
+		coworkingErr := err.(models.CoworkingErr)
+		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"id": id})
 }

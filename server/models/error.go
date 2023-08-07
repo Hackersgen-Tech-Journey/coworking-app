@@ -5,6 +5,7 @@ const (
 	InvalidCredentialsErr = "user not registered or bad credentials"
 	DbErr                 = "generic db err"
 	TokenGenerationErr    = "failure in generating the JWT token"
+	EmailAlreadyInUse     = "this email has been already registered"
 )
 
 type CoworkingErr struct {

@@ -1,10 +1,7 @@
 package utils
 
 import (
-	"net/http"
 	"time"
-
-	"coworkingapp/models"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -16,7 +13,7 @@ func GenerateToken(email string, secretKey []byte) (string, error) {
 	claims["sub"] = email
 	tokenString, err := token.SignedString(secretKey)
 	if err != nil {
-		return "", models.CoworkingErr{StatusCode: http.StatusInternalServerError, Code: models.TokenGenerationErr, Message: err.Error()}
+		return "", err
 	}
 	return tokenString, nil
 }
