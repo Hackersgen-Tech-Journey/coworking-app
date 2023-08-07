@@ -11,7 +11,7 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/auth/login", handlers.Login)
-	r.POST("/auth/signup", handlers.Login)
+	r.POST("/auth/signup", handlers.Signup)
 
 	if err := r.Run(":8000"); err != nil {
 		panic(err)
