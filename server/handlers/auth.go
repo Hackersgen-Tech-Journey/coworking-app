@@ -4,8 +4,10 @@ import (
 	"net/http"
 
 	"coworkingapp/models"
+	"coworkingapp/utils"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type UserInfo struct {
@@ -24,7 +26,21 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, models.CoworkingErr{Code: models.ValidationErr, Message: err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, userInfo)
+	db := c.MustGet("DbKey").(*gorm.DB)
+	signedInUser, err := models.LoginUser(db, userInfo.Username, userInfo.Password)
+	if err != nil {
+		coworkingErr := err.(models.CoworkingErr)
+		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		return
+	}
+	secretKey := c.MustGet("ConfigKey").(models.CoworkingConfig).SecretKey
+	token, err := utils.GenerateToken(signedInUser.Email, []byte(secretKey))
+	if err != nil {
+		coworkingErr := err.(models.CoworkingErr)
+		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
 func Signup(c *gin.Context) {
