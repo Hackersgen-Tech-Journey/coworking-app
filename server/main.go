@@ -49,14 +49,15 @@ func main() {
 	r.GET("/rooms/:id", handlers.GetRoomById)
 	r.GET("/rooms/:id/photos", handlers.GetRoomPhotos)
 	r.POST("/bookings", middlewares.AuthorizeUser(), handlers.AddBooking)
+	r.GET("/bookings", middlewares.AuthorizeUser(), handlers.GetBookingsByUserId)
 	if err := r.Run(":8080"); err != nil {
 		panic(err)
 	}
 }
 
 func seedData(db *gorm.DB) {
-	db.Where("email <> ''").Delete(&models.User{})
 	db.Where("room_id <> ''").Delete(&models.Booking{})
+	db.Where("email <> ''").Delete(&models.User{})
 	db.Where("url <> ''").Delete(&models.Photo{})
 	db.Where("number_of_seats > 0").Delete(&models.Room{})
 	userId := utils.GetUuid()

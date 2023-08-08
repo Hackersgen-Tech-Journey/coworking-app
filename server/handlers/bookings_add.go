@@ -31,7 +31,7 @@ func mapBookingDtoToModel(dto BookingDto, userId string) (model *models.Booking,
 	model.RoomId = dto.RoomId
 	model.BookedOn = time.Now()
 	model.BookingStartDate = dateFrom
-	model.BookingEndTime = dateTo
+	model.BookingEndDate = dateTo
 	model.UserId = userId
 	return
 }

@@ -8,14 +8,14 @@ import (
 )
 
 type Booking struct {
-	ID               string
-	BookedOn         time.Time
-	BookingStartDate time.Time
-	BookingEndTime   time.Time
-	RoomId           string
-	Room             Room
-	UserId           string
-	User             User
+	ID               string    `json:"id"`
+	BookedOn         time.Time `json:"booked_on"`
+	BookingStartDate time.Time `json:"booking_start_date"`
+	BookingEndDate   time.Time `json:"booking_end_date"`
+	RoomId           string    `json:"room_id"`
+	Room             Room      `json:"-"`
+	UserId           string    `json:"-"`
+	User             User      `json:"-"`
 }
 
 func CreateBooking(db *gorm.DB, booking Booking) (id *string, err error) {
