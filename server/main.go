@@ -34,8 +34,10 @@ func main() {
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Room{})
 	db.AutoMigrate(&models.Photo{})
+	db.AutoMigrate(&models.Booking{})
 	db.Where("url <> ''").Delete(&models.Photo{})
 	db.Where("number_of_seats > 0").Delete(&models.Room{})
+	db.Where("room_id <> ''").Delete(&models.Booking{})
 	seedRooms(db)
 	r := gin.Default()
 	r.Use(func(ctx *gin.Context) {
@@ -48,6 +50,7 @@ func main() {
 	r.GET("/rooms", handlers.GetAllRooms)
 	r.GET("/rooms/:id", handlers.GetRoomById)
 	r.GET("/rooms/:id/photos", handlers.GetRoomPhotos)
+	r.POST("/bookings", handlers.AddBooking)
 	if err := r.Run(":8080"); err != nil {
 		panic(err)
 	}
