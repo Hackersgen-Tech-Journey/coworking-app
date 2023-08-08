@@ -33,6 +33,8 @@ func main() {
 	}
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Room{})
+	db.AutoMigrate(&models.Photo{})
+	db.Where("url <> ''").Delete(&models.Photo{})
 	db.Where("number_of_seats > 0").Delete(&models.Room{})
 	seedRooms(db)
 	r := gin.Default()
@@ -45,6 +47,7 @@ func main() {
 	r.POST("/auth/signup", handlers.Signup)
 	r.GET("/rooms", handlers.GetAllRooms)
 	r.GET("/rooms/:id", handlers.GetRoomById)
+	r.GET("/rooms/:id/photos", handlers.GetRoomPhotos)
 	if err := r.Run(":8080"); err != nil {
 		panic(err)
 	}
@@ -52,8 +55,19 @@ func main() {
 
 func seedRooms(db *gorm.DB) {
 	db.Create([]*models.Room{
-		{ID: utils.GetUuid(), Name: "Green", Cost: 12.50, NumberOfSeats: 4, Category: "Open Space", MainPhoto: "/green_0001.jpg"},
-		{ID: utils.GetUuid(), Name: "Red", Cost: 100.00, NumberOfSeats: 50, Category: "Conference Hall", MainPhoto: "/red_0001.jpg"},
-		{ID: utils.GetUuid(), Name: "Yellow", Cost: 4.50, NumberOfSeats: 1, Category: "Shared Desk", MainPhoto: "/yellow_0001.jpg"},
+		{
+			ID: utils.GetUuid(), Name: "Green", Cost: 12.50, NumberOfSeats: 4, Category: "Open Space", MainPhoto: "/green_0001.jpg", Photos: []models.Photo{
+				{Url: "/green_0002.jpg"},
+				{Url: "/green_0003.jpg"},
+			},
+		},
+		{ID: utils.GetUuid(), Name: "Red", Cost: 100.00, NumberOfSeats: 50, Category: "Conference Hall", MainPhoto: "/red_0001.jpg", Photos: []models.Photo{
+			{Url: "/red_0002.jpg"},
+		}},
+		{ID: utils.GetUuid(), Name: "Yellow", Cost: 4.50, NumberOfSeats: 1, Category: "Shared Desk", MainPhoto: "/yellow_0001.jpg", Photos: []models.Photo{
+			{Url: "/yellow_0002.jpg"},
+			{Url: "/yellow_0003.jpg"},
+			{Url: "/yellow_0004.jpg"},
+		}},
 	})
 }

@@ -50,3 +50,14 @@ func GetRoomById(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, room)
 }
+
+func GetRoomPhotos(c *gin.Context) {
+	db := c.MustGet("DbKey").(*gorm.DB)
+	photos, err := models.GetRoomPhotos(db, c.Param("id"))
+	if err != nil {
+		coworkingErr := err.(models.CoworkingErr)
+		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"id": c.Param("id"), "photos": photos})
+}
