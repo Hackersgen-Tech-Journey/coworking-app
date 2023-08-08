@@ -39,3 +39,14 @@ func GetAllRooms(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, rooms)
 }
+
+func GetRoomById(c *gin.Context) {
+	db := c.MustGet("DbKey").(*gorm.DB)
+	room, err := models.GetRoomById(db, c.Param("id"))
+	if err != nil {
+		coworkingErr := err.(models.CoworkingErr)
+		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		return
+	}
+	c.JSON(http.StatusOK, room)
+}

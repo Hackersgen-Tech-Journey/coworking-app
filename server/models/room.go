@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -22,6 +23,17 @@ func GetRooms(db *gorm.DB, dateFrom, dateTo time.Time) (res []Room, err error) {
 	_ = dateTo
 	err = db.Model(&Room{}).Find(&res).Error
 	if err != nil {
+		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
+	}
+	return
+}
+
+func GetRoomById(db *gorm.DB, id string) (res *Room, err error) {
+	err = db.Model(&Room{}).First(&res, "id = ?", id).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, CoworkingErr{StatusCode: http.StatusNotFound, Code: ObjectNotFound, Message: err.Error()}
+		}
 		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
 	}
 	return

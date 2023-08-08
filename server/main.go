@@ -34,6 +34,7 @@ func main() {
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Room{})
 	db.Where("number_of_seats > 0").Delete(&models.Room{})
+	seedRooms(db)
 	r := gin.Default()
 	r.Use(func(ctx *gin.Context) {
 		ctx.Set("DbKey", db)
@@ -43,6 +44,7 @@ func main() {
 	r.POST("/auth/login", handlers.Login)
 	r.POST("/auth/signup", handlers.Signup)
 	r.GET("/rooms", handlers.GetAllRooms)
+	r.GET("/rooms/:id", handlers.GetRoomById)
 	if err := r.Run(":8080"); err != nil {
 		panic(err)
 	}
