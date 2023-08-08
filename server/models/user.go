@@ -36,3 +36,14 @@ func SignupUser(db *gorm.DB, user User) (id string, err error) {
 	}
 	return user.ID, nil
 }
+
+func GetUserByEmail(db *gorm.DB, email string) (res *User, err error) {
+	err = db.Model(&User{}).Where("email = ?", email).First(&res).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, CoworkingErr{StatusCode: http.StatusNotFound, Code: ObjectNotFound, Message: err.Error()}
+		}
+		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
+	}
+	return
+}

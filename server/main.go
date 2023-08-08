@@ -38,7 +38,7 @@ func main() {
 	db.Where("url <> ''").Delete(&models.Photo{})
 	db.Where("number_of_seats > 0").Delete(&models.Room{})
 	db.Where("room_id <> ''").Delete(&models.Booking{})
-	seedRooms(db)
+	seedData(db)
 	r := gin.Default()
 	r.Use(func(ctx *gin.Context) {
 		ctx.Set("DbKey", db)
@@ -56,7 +56,14 @@ func main() {
 	}
 }
 
-func seedRooms(db *gorm.DB) {
+func seedData(db *gorm.DB) {
+	userId := utils.GetUuid()
+	db.Create(&models.User{
+		ID:       userId,
+		Email:    "ipesenti@sorint.com",
+		Username: "ipesenti",
+		Password: "abcd1234!!",
+	})
 	db.Create([]*models.Room{
 		{
 			ID: utils.GetUuid(), Name: "Green", Cost: 12.50, NumberOfSeats: 4, Category: "Open Space", MainPhoto: "/green_0001.jpg", Photos: []models.Photo{

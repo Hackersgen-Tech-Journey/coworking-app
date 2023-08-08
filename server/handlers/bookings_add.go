@@ -35,6 +35,7 @@ func mapBookingDtoToModel(dto BookingDto) (model *models.Booking, err error) {
 	return
 }
 
+// TODO: restrict the route with a middleware
 func AddBooking(c *gin.Context) {
 	var bookingDto BookingDto
 	if err := c.ShouldBind(&bookingDto); err != nil {
@@ -48,7 +49,8 @@ func AddBooking(c *gin.Context) {
 		return
 	}
 	db := c.MustGet("DbKey").(*gorm.DB)
-	id, err := models.CreateBooking(db, *model)
+	// TODO: get email from ctx
+	id, err := models.CreateBooking(db, *model, "ipesenti@sorint.com")
 	if err != nil {
 		coworkingErr := err.(models.CoworkingErr)
 		c.JSON(coworkingErr.StatusCode, coworkingErr)
