@@ -13,25 +13,19 @@ import (
 
 type BookingDto struct {
 	RoomId   string `json:"room_id" binding:"required"`
-	DateFrom string `json:"date_from" binding:"required"`
-	DateTo   string `json:"date_to" binding:"required"`
+	BookedOn string `json:"booked_on" binding:"required"`
 }
 
 func mapBookingDtoToModel(dto BookingDto, userId string) (model *models.Booking, err error) {
-	dateFrom, err := time.Parse("2006-01-02", dto.DateFrom)
-	if err != nil {
-		return nil, models.CoworkingErr{StatusCode: http.StatusBadRequest, Code: models.DateWrongFormatErr, Message: err.Error()}
-	}
-	dateTo, err := time.Parse("2006-01-02", dto.DateTo)
+	bookedOn, err := time.Parse("2006-01-02", dto.BookedOn)
 	if err != nil {
 		return nil, models.CoworkingErr{StatusCode: http.StatusBadRequest, Code: models.DateWrongFormatErr, Message: err.Error()}
 	}
 	model = &models.Booking{}
 	model.ID = utils.GetUuid()
 	model.RoomId = dto.RoomId
-	model.BookedOn = time.Now()
-	model.BookingStartDate = dateFrom
-	model.BookingEndDate = dateTo
+	model.CreatedAt = time.Now()
+	model.BookedOn = bookedOn
 	model.UserId = userId
 	return
 }
