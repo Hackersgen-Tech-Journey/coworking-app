@@ -28,15 +28,15 @@ type Room struct {
 }
 
 func GetRooms(db *gorm.DB, dayToBook time.Time) (res []Room, err error) {
-	err = db.Model(&Room{}).Find(&res).Error
+	err = db.Model(&Room{}).Preload("Bookings").Find(&res).Error
 	if err != nil {
 		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
 	}
-	for _, room := range res {
-		room.IsAvailable = true
+	for k, room := range res {
+		res[k].IsAvailable = true
 		for _, booking := range room.Bookings {
 			if booking.BookedOn.Equal(dayToBook) {
-				room.IsAvailable = false
+				res[k].IsAvailable = false
 				break
 			}
 		}
