@@ -49,7 +49,7 @@ func Signup(c *gin.Context) {
 		return
 	}
 	db := c.MustGet("DbKey").(*gorm.DB)
-	user := models.CoworkingUser{Email: signupReq.Email, Username: signupReq.Username, Password: signupReq.Password}
+	user := models.User{Email: signupReq.Email, Username: signupReq.Username, Password: signupReq.Password}
 	id, err := models.SignupUser(db, user)
 	if err != nil {
 		coworkingErr := err.(models.CoworkingErr)

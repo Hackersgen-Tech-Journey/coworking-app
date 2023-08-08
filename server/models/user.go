@@ -9,15 +9,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type CoworkingUser struct {
+type User struct {
 	ID       string
 	Email    string
 	Username string
 	Password string
 }
 
-func LoginUser(db *gorm.DB, username, password string) (res *CoworkingUser, err error) {
-	if err = db.Model(&CoworkingUser{}).Where("username = ? and password = ?", username, password).First(&res).Error; err != nil {
+func LoginUser(db *gorm.DB, username, password string) (res *User, err error) {
+	if err = db.Model(&User{}).Where("username = ? and password = ?", username, password).First(&res).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, CoworkingErr{StatusCode: http.StatusNotFound, Code: InvalidCredentialsErr, Message: err.Error()}
 		}
@@ -26,12 +26,12 @@ func LoginUser(db *gorm.DB, username, password string) (res *CoworkingUser, err 
 	return
 }
 
-func SignupUser(db *gorm.DB, user CoworkingUser) (id string, err error) {
-	if err = db.Model(&CoworkingUser{}).First(&CoworkingUser{}, "email = ?", user.Email).Error; err == nil {
-		return "", CoworkingErr{StatusCode: http.StatusBadRequest, Code: EmailAlreadyInUse, Message: "please change the email and retry"}
+func SignupUser(db *gorm.DB, user User) (id string, err error) {
+	if err = db.Model(&User{}).First(&User{}, "email = ?", user.Email).Error; err == nil {
+		return "", CoworkingErr{StatusCode: http.StatusBadRequest, Code: EmailAlreadyInUseErr, Message: "please change the email and retry"}
 	}
 	user.ID = utils.GetUuid()
-	if err = db.Model(&CoworkingUser{}).Create(&user).Error; err != nil {
+	if err = db.Model(&User{}).Create(&user).Error; err != nil {
 		return "", CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
 	}
 	return user.ID, nil
