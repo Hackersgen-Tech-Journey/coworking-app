@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
@@ -32,4 +33,26 @@ func GetBookingsByUserId(db *gorm.DB, userId string) (res []Booking, err error) 
 		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
 	}
 	return
+}
+
+func GetBookingById(db *gorm.DB, id, userId string) (res *Booking, err error) {
+	err = db.Model(&Booking{}).Where("id = ? and user_id = ?", id, userId).First(&res).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, CoworkingErr{StatusCode: http.StatusNotFound, Code: ObjectNotFoundErr, Message: err.Error()}
+		}
+		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
+	}
+	return
+}
+
+func DeleteBookingById(db *gorm.DB, id, userId string) error {
+	booking, err := GetBookingById(db, id, userId)
+	if err != nil {
+		return err
+	}
+	if err := db.Model(&Booking{}).Delete(booking).Error; err != nil {
+		return CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
+	}
+	return nil
 }

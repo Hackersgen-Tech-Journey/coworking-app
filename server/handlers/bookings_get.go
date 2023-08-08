@@ -20,3 +20,15 @@ func GetBookingsByUserId(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, bookings)
 }
+
+func GetBookingById(c *gin.Context) {
+	userId := c.MustGet("UserIdKey").(string)
+	db := c.MustGet("DbKey").(*gorm.DB)
+	booking, err := models.GetBookingById(db, c.Param("id"), userId)
+	if err != nil {
+		coworkingErr := err.(models.CoworkingErr)
+		c.JSON(coworkingErr.StatusCode, coworkingErr)
+		return
+	}
+	c.JSON(http.StatusOK, booking)
+}

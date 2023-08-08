@@ -50,6 +50,8 @@ func main() {
 	r.GET("/rooms/:id/photos", handlers.GetRoomPhotos)
 	r.POST("/bookings", middlewares.AuthorizeUser(), handlers.AddBooking)
 	r.GET("/bookings", middlewares.AuthorizeUser(), handlers.GetBookingsByUserId)
+	r.GET("/bookings/:id", middlewares.AuthorizeUser(), handlers.GetBookingById)
+	r.DELETE("/bookings/:id", middlewares.AuthorizeUser(), handlers.DeleteBooking)
 	if err := r.Run(":8080"); err != nil {
 		panic(err)
 	}
