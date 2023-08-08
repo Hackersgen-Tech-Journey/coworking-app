@@ -7,7 +7,9 @@ const (
 	TokenGenerationErr    = "failure in generating the JWT token"
 	EmailAlreadyInUseErr  = "this email has been already registered"
 	DateWrongFormatErr    = "date has a wrong format. Expected YYYY-mm-DD"
-	ObjectNotFound        = "the object with the requested id is not found"
+	ObjectNotFoundErr     = "the object with the requested id is not found"
+	MissingTokenErr       = "the jwt token is missing"
+	TokenNotValidErr      = "the jwt token is not valid"
 )
 
 type CoworkingErr struct {

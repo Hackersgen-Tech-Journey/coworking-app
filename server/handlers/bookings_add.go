@@ -17,7 +17,7 @@ type BookingDto struct {
 	DateTo   string `json:"date_to" binding:"required"`
 }
 
-func mapBookingDtoToModel(dto BookingDto) (model *models.Booking, err error) {
+func mapBookingDtoToModel(dto BookingDto, userId string) (model *models.Booking, err error) {
 	dateFrom, err := time.Parse("2006-01-02", dto.DateFrom)
 	if err != nil {
 		return nil, models.CoworkingErr{StatusCode: http.StatusBadRequest, Code: models.DateWrongFormatErr, Message: err.Error()}
@@ -32,25 +32,25 @@ func mapBookingDtoToModel(dto BookingDto) (model *models.Booking, err error) {
 	model.BookedOn = time.Now()
 	model.BookingStartDate = dateFrom
 	model.BookingEndTime = dateTo
+	model.UserId = userId
 	return
 }
 
-// TODO: restrict the route with a middleware
 func AddBooking(c *gin.Context) {
 	var bookingDto BookingDto
 	if err := c.ShouldBind(&bookingDto); err != nil {
 		c.JSON(http.StatusBadRequest, models.CoworkingErr{Code: models.ValidationErr, Message: err.Error()})
 		return
 	}
-	model, err := mapBookingDtoToModel(bookingDto)
+	userId := c.MustGet("UserIdKey").(string)
+	model, err := mapBookingDtoToModel(bookingDto, userId)
 	if err != nil {
 		coworkingErr := err.(models.CoworkingErr)
 		c.JSON(coworkingErr.StatusCode, coworkingErr)
 		return
 	}
 	db := c.MustGet("DbKey").(*gorm.DB)
-	// TODO: get email from ctx
-	id, err := models.CreateBooking(db, *model, "ipesenti@sorint.com")
+	id, err := models.CreateBooking(db, *model)
 	if err != nil {
 		coworkingErr := err.(models.CoworkingErr)
 		c.JSON(coworkingErr.StatusCode, coworkingErr)

@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"coworkingapp/handlers"
+	"coworkingapp/middlewares"
 	"coworkingapp/models"
 	"coworkingapp/utils"
 
@@ -35,9 +36,6 @@ func main() {
 	db.AutoMigrate(&models.Room{})
 	db.AutoMigrate(&models.Photo{})
 	db.AutoMigrate(&models.Booking{})
-	db.Where("url <> ''").Delete(&models.Photo{})
-	db.Where("number_of_seats > 0").Delete(&models.Room{})
-	db.Where("room_id <> ''").Delete(&models.Booking{})
 	seedData(db)
 	r := gin.Default()
 	r.Use(func(ctx *gin.Context) {
@@ -50,13 +48,17 @@ func main() {
 	r.GET("/rooms", handlers.GetAllRooms)
 	r.GET("/rooms/:id", handlers.GetRoomById)
 	r.GET("/rooms/:id/photos", handlers.GetRoomPhotos)
-	r.POST("/bookings", handlers.AddBooking)
+	r.POST("/bookings", middlewares.AuthorizeUser(), handlers.AddBooking)
 	if err := r.Run(":8080"); err != nil {
 		panic(err)
 	}
 }
 
 func seedData(db *gorm.DB) {
+	db.Where("email <> ''").Delete(&models.User{})
+	db.Where("room_id <> ''").Delete(&models.Booking{})
+	db.Where("url <> ''").Delete(&models.Photo{})
+	db.Where("number_of_seats > 0").Delete(&models.Room{})
 	userId := utils.GetUuid()
 	db.Create(&models.User{
 		ID:       userId,

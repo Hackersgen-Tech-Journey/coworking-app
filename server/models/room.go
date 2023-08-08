@@ -40,7 +40,7 @@ func GetRoomById(db *gorm.DB, id string) (res *Room, err error) {
 	err = db.Model(&Room{}).First(&res, "id = ?", id).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, CoworkingErr{StatusCode: http.StatusNotFound, Code: ObjectNotFound, Message: err.Error()}
+			return nil, CoworkingErr{StatusCode: http.StatusNotFound, Code: ObjectNotFoundErr, Message: err.Error()}
 		}
 		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
 	}

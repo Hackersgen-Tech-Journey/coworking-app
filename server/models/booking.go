@@ -18,12 +18,7 @@ type Booking struct {
 	User             User
 }
 
-func CreateBooking(db *gorm.DB, booking Booking, email string) (id *string, err error) {
-	user, err := GetUserByEmail(db, email)
-	if err != nil {
-		return nil, err
-	}
-	booking.UserId = user.ID
+func CreateBooking(db *gorm.DB, booking Booking) (id *string, err error) {
 	err = db.Model(&Booking{}).Create(&booking).Error
 	if err != nil {
 		return nil, CoworkingErr{StatusCode: http.StatusInternalServerError, Code: DbErr, Message: err.Error()}
