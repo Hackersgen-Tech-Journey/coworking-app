@@ -16,25 +16,12 @@ function updateMap(key, value) {
       class="w-fit h-fit bg-white flex flex-row absolute bottom-3 left-1/2 -translate-x-1/2 border-2 border-blue-water-500 p-4 rounded-3xl gap-3"
     >
       <IconInput
-        :placeholder="'Dove vuoi andare?'"
-        @on-value-changed="(value) => updateMap('location', value)"
-      />
-      <IconInput
         :placeholder="'Scegli la data'"
         type="date"
         @on-value-changed="(value) => updateMap('date_to_book', value)"
       >
         <template #icon>
           <img src="@/assets/svg/calendar.svg" alt="map pin" class="mr-3" />
-        </template>
-      </IconInput>
-      <IconInput
-        :placeholder="'In quanti siete?'"
-        type="number"
-        @on-value-changed="(value) => updateMap('number_of_users', value)"
-      >
-        <template #icon>
-          <img src="@/assets/svg/user.svg" alt="map pin" class="mr-3" />
         </template>
       </IconInput>
       <div
