@@ -12,7 +12,9 @@ module.exports = {
       height: {
         90: "22.5rem",
       },
-
+      width: {
+        90: "22.5rem",
+      },
       lineHeight: {
         tighter: 1.185,
       },

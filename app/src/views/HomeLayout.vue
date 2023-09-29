@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BottomMenu from "@/components/menu/BottomMenu.vue";
+import BottomMenu from "../components/menu/BottomMenu.vue";
 </script>
 
 <template>
