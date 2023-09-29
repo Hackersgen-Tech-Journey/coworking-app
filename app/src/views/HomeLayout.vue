@@ -3,7 +3,7 @@ import BottomMenu from "../components/menu/BottomMenu.vue";
 </script>
 
 <template>
-  <div class="px-5 py-4">
+  <div class="px-5 py-4 h-full">
     <RouterView />
     <BottomMenu />
   </div>

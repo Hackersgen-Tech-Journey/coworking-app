@@ -23,7 +23,7 @@ export const useAuthStore = defineStore("auth-store", {
         return false;
       }
       const { sendRequest } = useAxios();
-      this.login(username, password);
+      this.login(form.username, form.password);
       return true;
     },
   },

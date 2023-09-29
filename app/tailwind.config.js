@@ -23,6 +23,7 @@ module.exports = {
       },
       backgroundImage: {
         coworking: "url('@/assets/main-bg.jpeg')",
+        pattern: "url('@/assets/new_logo.jpeg')",
       },
     },
   },

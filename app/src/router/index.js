@@ -13,6 +13,7 @@ const router = createRouter({
       children: [
         { path: "", name: "home", component: Home },
         { path: "my-bookings", name: "my-bookings", component: MyBookings },
+        { path: "room/:roomId", name: "room-detail", component: MyBookings },
       ],
       component: HomeLayout,
     },

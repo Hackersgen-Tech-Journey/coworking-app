@@ -7,6 +7,15 @@ const isRegistering = ref(false);
 </script>
 
 <template>
+  <header
+    class="z-30 absolute top-0 w-full left-0 h-24 bg-transparent flex flex-row justify-between items-center px-10"
+  >
+    <img
+      src="@/assets/logo.png"
+      alt="logo"
+      class="h-full object-contain object-center bg-white"
+    />
+  </header>
   <div class="w-full flex flex-col md:flex-row h-full flex-1 gap-5">
     <div
       class="md:flex-1 md:h-full md:overflow-scroll flex-col flex py-5 px-20 mt-24 gap-6"

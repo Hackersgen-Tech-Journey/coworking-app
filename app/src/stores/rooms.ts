@@ -1,19 +1,21 @@
 import { defineStore } from "pinia";
 import { useAxios } from "../composables/useAxios";
+import { Room } from "./models/room";
+import { rooms } from "./data/rooms";
 
 export const useRoomsStore = defineStore("rooms-store", {
   state: () => ({
-    roomDetail: null,
-    rooms: [],
+    roomDetail: null as null | Room,
+    rooms: [] as Array<Room>,
   }),
   actions: {
-    getRooms() {
+    getRooms(body) {
       const { sendRequest } = useAxios();
-      this.rooms = [];
+      this.rooms = rooms;
     },
     getRoomDetail(id) {
       const { sendRequest } = useAxios();
-      this.roomDetail = {};
+      this.roomDetail = rooms.find((room) => room.id === id);
     },
   },
   getters: {

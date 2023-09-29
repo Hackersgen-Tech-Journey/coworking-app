@@ -11,8 +11,8 @@ const props = defineProps({
     default: "text",
   },
 });
-const inputValue = ref("");
 
+const inputValue = ref("");
 watch(
   () => inputValue.value,
   (newVal) => emit("onValueChanged", newVal)

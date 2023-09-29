@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useAxios } from "../composables/useAxios";
+import { bookings } from "./data/bookings";
 
 export const useBookingsStore = defineStore("bookings-store", {
   state: () => ({
@@ -7,21 +8,19 @@ export const useBookingsStore = defineStore("bookings-store", {
     bookingDetail: null,
   }),
   actions: {
-    createBooking(room_id) {
+    createBooking(room_id, booked_on) {
       const { sendRequest } = useAxios();
-      this.bookingDetail = null;
     },
     getBookings() {
       const { sendRequest } = useAxios();
-      this.bookings = [];
+      this.bookings = bookings;
     },
     getBookingDetail(id) {
       const { sendRequest } = useAxios();
-      this.bookingDetail = null;
+      this.bookingDetail = bookings.find((booking) => booking.id === id);
     },
     deleteBooking(id) {
       const { sendRequest } = useAxios();
-      this.bookingDetail = null;
     },
   },
   getters: {
