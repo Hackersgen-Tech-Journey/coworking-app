@@ -32,8 +32,10 @@ function getRooms() {
             type="date"
             @on-value-changed="(value) => updateMap('day_to_book', value)"
           >
-            <template #icon>
-              <img src="@/assets/svg/calendar.svg" alt="map pin" class="mr-3" />
+            <template #icon="{ id }">
+              <label :for="id" class="h-full flex flex-col justify-center">
+                Data Selezionata: &nbsp;&nbsp;
+              </label>
             </template>
           </IconInput>
           <div
@@ -54,7 +56,7 @@ function getRooms() {
             v-if="!roomsStore.roomsGetter.length"
             class="absolute text-gray-500 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
           >
-            Seleziona data per visualizzare i workspace
+            Seleziona data per visualizzare i workspace disponibili
           </div>
           <RoomCard
             v-for="room in roomsStore.roomsGetter"
