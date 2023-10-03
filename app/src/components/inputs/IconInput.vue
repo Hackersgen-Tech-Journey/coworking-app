@@ -22,7 +22,7 @@ const emit = defineEmits(["onValueChanged"]);
 </script>
 
 <template>
-  <div class="border border-black rounded-xl p-1.5 flex flex-row w-90">
+  <div class="p-1.5 flex flex-row w-90">
     <slot name="icon">
       <img src="@/assets/svg/map-pin.svg" alt="map pin" class="mr-3" />
     </slot>
