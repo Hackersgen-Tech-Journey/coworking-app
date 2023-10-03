@@ -1,2 +1,2 @@
-FROM postgres:30b25533c2939db363488ed1f7e0b31260acb4f929274acfedd4a47f865b01af
+FROM postgres
 COPY init.sql /docker-entrypoint-initdb.d/
