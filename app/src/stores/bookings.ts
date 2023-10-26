@@ -22,6 +22,10 @@ export const useBookingsStore = defineStore("bookings-store", {
     },
     deleteBooking(id) {
       const { sendRequest } = useAxios();
+      const oldBookings = [...this.bookings];
+      const index = this.bookings.findIndex((value) => value.id == id);
+      oldBookings.splice(index, 1);
+      this.bookings = oldBookings;
     },
   },
   getters: {

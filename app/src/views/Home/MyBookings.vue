@@ -24,6 +24,12 @@ bookingsStore.getBookings();
             <span class="font-semibold"> Data prenotazione:</span>
             {{ booking.booked_on }}
           </div>
+          <div
+            class="p-3 bg-red-500 text-white cursor-pointer"
+            @click="() => bookingsStore.deleteBooking(booking.id)"
+          >
+            Elimina
+          </div>
         </div>
       </div>
     </Content>

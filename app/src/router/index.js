@@ -3,6 +3,7 @@ import HomeLayout from "../views/HomeLayout.vue";
 import Home from "../views/Home/Home.vue";
 import MyBookings from "../views/Home/MyBookings.vue";
 import LoginView from "../views/LoginView.vue";
+import RoomDetail from "../views/RoomDetail.vue";
 import { useAuthStore } from "../stores/auth";
 
 const router = createRouter({
@@ -13,7 +14,7 @@ const router = createRouter({
       children: [
         { path: "", name: "home", component: Home },
         { path: "my-bookings", name: "my-bookings", component: MyBookings },
-        { path: "room/:roomId", name: "room-detail", component: MyBookings },
+        { path: "room/:roomId", name: "room-detail", component: RoomDetail },
       ],
       component: HomeLayout,
     },

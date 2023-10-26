@@ -10,6 +10,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  initialValue: {
+    type: String,
+    default: "",
+  },
   type: {
     type: String,
     default: "text",
@@ -20,6 +24,15 @@ const inputValue = ref("");
 watch(
   () => inputValue.value,
   (newVal) => emit("onValueChanged", newVal)
+);
+
+watch(
+  () => props.initialValue,
+  (newVal) => {
+    if (!inputValue.value) {
+      inputValue.value = newVal;
+    }
+  }
 );
 
 const emit = defineEmits(["onValueChanged"]);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import { useRoomsStore } from "../../stores/rooms";
 import RoomCard from "../../components/cards/RoomCard.vue";
@@ -8,12 +8,22 @@ import IconInput from "../../components/inputs/IconInput.vue";
 import Content from "../../components/ui/Content.vue";
 
 const searchMap = ref(new Map());
+const initialDayToBook = ref("");
 const roomsStore = useRoomsStore();
 function updateMap(key, value) {
   searchMap.value.set(key, value);
 }
+
+onMounted(() => {
+  const dayToBook = localStorage.getItem("day_to_book");
+  if (!dayToBook) return;
+  initialDayToBook.value = dayToBook;
+  roomsStore.getRooms({ day_to_book: dayToBook });
+});
+
 function getRooms() {
   if (!searchMap.value.get("day_to_book")) return;
+  localStorage.setItem("day_to_book", searchMap.value.get("day_to_book"));
   roomsStore.getRooms(Object.fromEntries(searchMap.value));
 }
 </script>
@@ -26,6 +36,7 @@ function getRooms() {
         <IconInput
           :placeholder="'Scegli la data'"
           type="date"
+          :initial-value="initialDayToBook"
           @on-value-changed="(value) => updateMap('day_to_book', value)"
         >
           <template #icon="{ id }">
