@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 import { useAxios } from "../composables/useAxios";
 import { bookings } from "./data/bookings";
+import { Booking } from "./models/booking";
 
 export const useBookingsStore = defineStore("bookings-store", {
   state: () => ({
-    bookings: [],
+    bookings: [] as Array<Booking>,
     bookingDetail: null,
   }),
   actions: {
