@@ -38,11 +38,8 @@ func main() {
 	db.AutoMigrate(&models.Booking{})
 	seedData(db)
 	r := gin.Default()
-	r.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", config.AllowedOrigin)
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-		c.Next()
-	})
+	r.Use(middlewares.EarlyExitOnPreflightRequests())
+	r.Use(middlewares.SetCorsPolicy(config.AllowedOrigin))
 	r.Use(func(ctx *gin.Context) {
 		ctx.Set("DbKey", db)
 		ctx.Set("ConfigKey", config)
