@@ -42,3 +42,4 @@
 |21|token-based authentication & JWT tokens|10|TODO|
 |22|generate & validate token|15|TODO|
 |23|restrict access with middleware|15|TODO|
+|24|serve static files. final tests|10|TODO|
