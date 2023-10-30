@@ -40,6 +40,7 @@ func main() {
 	r := gin.Default()
 	r.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", config.AllowedOrigin)
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
 		c.Next()
 	})
 	r.Use(func(ctx *gin.Context) {
