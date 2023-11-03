@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  coworking-server:
+    build: ./server/.
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+            
+  coworking-app:
+    build: ./app/.
+    depends_on:
+      - coworking-server
+    ports:
+      - "5173:5173"
+volumes:
+  db_data:
