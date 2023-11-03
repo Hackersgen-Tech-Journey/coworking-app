@@ -19,13 +19,13 @@
 
 |Number|Subject|Minutes|Status|
 |:--:|--|:--:|--|
-|1|Intro to the backend part of the tech journey. Set up. Swagger|15|TODO|
-|2|REST standard + Web API|10|TODO|
-|3|gin-gonic/gin web framework. routing, setup, and run. Postman|20|TODO|
-|4|HTTP handlers definition|10|TODO|
-|5|HTTP DTOs definition|10|TODO|
-|6|gin-gonic/gin web framework. binding|15|TODO|
-|7|models definition|15|TODO|
+|1|Intro to the backend part of the tech journey. Set up. Swagger|15|DONE|
+|2|REST standard + Web API|10|DONE|
+|3|gin-gonic/gin web framework. routing, setup, and run. Postman|20|DONE|
+|4|HTTP handlers definition|10|DONE|
+|5|HTTP DTOs definition|10|DONE|
+|6|gin-gonic/gin web framework. binding|15|DONE|
+|7|models definition|15|DONE|
 |8|GORM intro|15|TODO|
 |9|models functions definition|20|TODO|
 |10|interfaces & structs|20|TODO|
