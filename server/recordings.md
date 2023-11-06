@@ -36,10 +36,10 @@
 |14|refine models functions with custom error|20|DONE|
 |15|gin-gonic/gin web framework. middleware|15|DONE|
 |16|read file from OS|10|DONE|
-|17|json marshal & unmarshal|10|TODO|
-|18|define config & use throughout the project|15|TODO|
-|19|authentication & authorization|10|TODO|
-|20|token-based authentication & JWT tokens|10|TODO|
-|21|generate & validate token|15|TODO|
-|22|restrict access with middleware|15|TODO|
-|23|serve static files. final tests|10|TODO|
+|17|json marshal & unmarshal|10|DONE|
+|18|define config & use throughout the project|15|DONE|
+|19|authentication & authorization|10|DONE|
+|20|token-based authentication & JWT tokens|10|DONE|
+|21|generate & validate token|15|DONE|
+|22|restrict access with middleware|15|DONE|
+|23|serve static files. final tests|10|DONE|
