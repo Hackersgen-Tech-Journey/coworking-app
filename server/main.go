@@ -45,6 +45,7 @@ func main() {
 		ctx.Set("ConfigKey", config)
 		ctx.Next()
 	})
+	r.Static("/imgs", "./imgs")
 	r.POST("/auth/login", handlers.Login)
 	r.POST("/auth/signup", handlers.Signup)
 	r.GET("/rooms", handlers.GetAllRooms)
