@@ -61,10 +61,10 @@ func main() {
 }
 
 func seedData(db *gorm.DB) {
-	db.Where("room_id <> ''").Delete(&models.Booking{})
-	db.Where("email <> ''").Delete(&models.User{})
-	db.Where("url <> ''").Delete(&models.Photo{})
-	db.Where("number_of_seats > 0").Delete(&models.Room{})
+	db.Delete(&models.Booking{}, "1 = 1")
+	db.Delete(&models.User{}, "1 = 1")
+	db.Delete(&models.Photo{}, "1 = 1")
+	db.Delete(&models.Room{}, "1 = 1")
 	userId := utils.GetUuid()
 	db.Create(&models.User{
 		ID:       userId,
