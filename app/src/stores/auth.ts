@@ -4,7 +4,7 @@ import { AxiosError, AxiosRequestConfig } from "axios";
 
 export const useAuthStore = defineStore("auth-store", {
   state: () => ({
-    token: null,
+    token: null as string | null,
   }),
   actions: {
     init() {
@@ -28,7 +28,8 @@ export const useAuthStore = defineStore("auth-store", {
         return;
       }
       const { data } = response;
-      this.token = data;
+      const { token } = data;
+      this.token = token;
       localStorage.setItem("coworking-token", this.token);
       return true;
     },
@@ -50,13 +51,21 @@ export const useAuthStore = defineStore("auth-store", {
         console.log("Errore nella registrazione");
         return;
       }
-      this.login(form.username, form.password);
+      await this.login(form);
       return true;
     },
   },
   getters: {
     isAuthenticated(state) {
-      return !!state.token;
+      if (state.token) {
+        const claims = JSON.parse(atob(state.token.split(".")[1]));
+        const { exp } = claims;
+        console.log(exp);
+        if (!exp || exp < Date.now() / 1000 - 300) {
+          return false;
+        }
+      }
+      return true;
     },
   },
 });

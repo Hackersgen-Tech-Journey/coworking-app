@@ -27,7 +27,7 @@ const router = useRouter();
     "
   >
     <img
-      :src="main_photo"
+      :src="'http://localhost:8080/imgs' + main_photo"
       :alt="name"
       class="w-full rounded-t-xl object-center object-cover"
     />

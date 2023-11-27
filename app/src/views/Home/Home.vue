@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { useRoomsStore } from "../../stores/rooms";
+import { useDayjs } from "../../composables/index";
 import RoomCard from "../../components/cards/RoomCard.vue";
 import HeaderVue from "../../components/ui/Header.vue";
 import IconInput from "../../components/inputs/IconInput.vue";
@@ -10,6 +11,7 @@ import Content from "../../components/ui/Content.vue";
 const searchMap = ref(new Map());
 const initialDayToBook = ref("");
 const roomsStore = useRoomsStore();
+const { dayJs } = useDayjs();
 function updateMap(key, value) {
   searchMap.value.set(key, value);
 }
@@ -31,13 +33,16 @@ function getRooms() {
   <div class="w-full h-full pb-20 flex flex-col">
     <HeaderVue>
       <div
-        class="w-fit h-fit bg-white gap-3 flex flex-row border border-opacity-60"
+        class="h-fit bg-white gap-3 flex sm:flex-row flex-col border border-opacity-60 max-w-full"
       >
         <IconInput
           :placeholder="'Scegli la data'"
           type="date"
           :initial-value="initialDayToBook"
-          @on-value-changed="(value) => updateMap('day_to_book', value)"
+          @on-value-changed="
+            (value) =>
+              updateMap('day_to_book', dayJs(value).format('YYYY-MM-DD'))
+          "
         >
           <template #icon="{ id }">
             <label :for="id" class="h-full flex flex-col justify-center">
@@ -68,7 +73,7 @@ function getRooms() {
           :category="room.category"
           :number_of_seats="room.number_of_seats"
           :cost="room.cost"
-          :is_available="room.is_available"
+          :is_available="room.IsAvailable"
           :main_photo="room.main_photo"
           :name="room.name"
         ></RoomCard>

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useAxios } from "../composables/useAxios";
 import { bookings } from "./data/bookings";
 import { Booking } from "./models/booking";
+import { AxiosError } from "axios";
 
 export const useBookingsStore = defineStore("bookings-store", {
   state: () => ({
@@ -9,19 +10,48 @@ export const useBookingsStore = defineStore("bookings-store", {
     bookingDetail: null,
   }),
   actions: {
-    createBooking(room_id, booked_on) {
+    async createBooking(room_id, booked_on): Promise<boolean> {
       const { sendRequest } = useAxios();
+      const response = await sendRequest({
+        url: "/bookings",
+        method: "POST",
+        data: {
+          room_id,
+          booked_on,
+        },
+      });
+      if (response && response instanceof AxiosError) {
+        return false;
+      }
+      return true;
     },
-    getBookings() {
+    async getBookings() {
       const { sendRequest } = useAxios();
-      this.bookings = bookings;
+      const response = await sendRequest({
+        url: "/bookings",
+        method: "GET",
+      });
+      const { data } = response;
+      this.bookings = data;
     },
-    getBookingDetail(id) {
+    async getBookingDetail(id) {
       const { sendRequest } = useAxios();
-      this.bookingDetail = bookings.find((booking) => booking.id === id);
+      const response = await sendRequest({
+        url: "/bookings/" + id,
+        method: "GET",
+      });
+      const { data } = response;
+      this.bookingDetail = data;
     },
-    deleteBooking(id) {
+    async deleteBooking(id) {
       const { sendRequest } = useAxios();
+      const response = await sendRequest({
+        url: "/bookings/" + id,
+        method: "DELETE",
+      });
+      if (response && response instanceof AxiosError) {
+        return;
+      }
       const oldBookings = [...this.bookings];
       const index = this.bookings.findIndex((value) => value.id == id);
       oldBookings.splice(index, 1);

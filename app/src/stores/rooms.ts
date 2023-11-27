@@ -1,21 +1,41 @@
 import { defineStore } from "pinia";
 import { useAxios } from "../composables/useAxios";
 import { Room } from "./models/room";
-import { rooms } from "./data/rooms";
+import { AxiosRequestConfig } from "axios";
 
 export const useRoomsStore = defineStore("rooms-store", {
   state: () => ({
     roomDetail: null as null | Room,
     rooms: [] as Array<Room>,
+    roomPhotos: [] as Array<string>,
   }),
   actions: {
-    getRooms(body) {
+    async getRooms(body) {
       const { sendRequest } = useAxios();
-      this.rooms = rooms;
+      const response = await sendRequest({
+        url: "/rooms",
+        method: "GET",
+        data: body,
+      } as AxiosRequestConfig);
+      const { data } = response;
+      this.rooms = data;
     },
-    getRoomDetail(id) {
+    async getRoomDetail(id) {
       const { sendRequest } = useAxios();
-      this.roomDetail = rooms.find((room) => room.id === id);
+
+      const [rooms, photos] = await Promise.all([
+        sendRequest({
+          url: "/rooms/" + id,
+          method: "GET",
+        }),
+        sendRequest({
+          url: "/rooms/" + id + "/photos",
+          method: "GET",
+        }),
+      ]);
+      const { data } = rooms;
+      this.roomDetail = data;
+      this.roomPhotos = photos.data.photos;
     },
   },
   getters: {
@@ -24,6 +44,9 @@ export const useRoomsStore = defineStore("rooms-store", {
     },
     roomDetailGetter(state) {
       return state.roomDetail;
+    },
+    roomPhotosGetter(state) {
+      return state.roomPhotos;
     },
   },
 });

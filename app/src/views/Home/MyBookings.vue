@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Content from "../../components/ui/Content.vue";
 import HeaderVue from "../../components/ui/Header.vue";
+import { useDayjs } from "../../composables";
 import { useBookingsStore } from "../../stores/bookings";
 const bookingsStore = useBookingsStore();
 bookingsStore.getBookings();
+const { dayJs } = useDayjs();
 </script>
 <template>
   <div class="w-full h-full pb-20 flex flex-col">
@@ -22,7 +24,7 @@ bookingsStore.getBookings();
           </div>
           <div>
             <span class="font-semibold"> Data prenotazione:</span>
-            {{ booking.booked_on }}
+            {{ dayJs(booking.booked_on).format("DD/MM/YYYY") }}
           </div>
           <div
             class="p-3 bg-red-500 text-white cursor-pointer"

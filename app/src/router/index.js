@@ -28,13 +28,13 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   const authStore = useAuthStore();
+
   if (
     // make sure the user is authenticated
     !authStore.isAuthenticated &&
     // ❗️ Avoid an infinite redirect
     to.name !== "login"
   ) {
-    // redirect the user to the login page
     return { name: "login" };
   }
 });
