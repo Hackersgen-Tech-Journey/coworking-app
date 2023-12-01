@@ -29,9 +29,9 @@ import router from "./router";
 //  5.5) Sistemare IconInput X
 //  5.5) Sistemare Content X
 // 6) Sistemare pagine:
-//  6.1) Sistemare LoginView
-//  6.2) Sistemare Home
-//  6.3) Sistemare RoomDetail
+//  6.1) Sistemare LoginView X
+//  6.2) Sistemare Home X
+//  6.3) Sistemare RoomDetail X
 //  6.4) Sistemare MyBookings
 // 7) Colleghiamoci al BE:
 //  7.1) Autentichiamoci con il be

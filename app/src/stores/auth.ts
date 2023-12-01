@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useAxios } from "../composables/useAxios";
 
 export const useAuthStore = defineStore("auth-store", {
   state: () => ({
@@ -11,9 +12,14 @@ export const useAuthStore = defineStore("auth-store", {
     },
     async login(form) {
       // validiamo il form
+      if (!form["username"] || !form["password"]) {
+        return;
+      }
       // facciamo la chiamata di login
+      const { sendRequest } = useAxios();
+      const response = await sendRequest({}, "DUMMY");
       // settiamo il token nello store
-      this.token = "DUMMY";
+      this.token = response;
       // settiamo il token nel localStorage
       localStorage.setItem("coworking-token", this.token);
       // ritorniamo true in caso di settaggio del token positivo
@@ -21,7 +27,13 @@ export const useAuthStore = defineStore("auth-store", {
     },
     async register(form) {
       // validiamo il form
+
+      if (!form["username"] || !form["password"] || !form["email"]) {
+        return;
+      }
       // facciamo la chiamata di registrazione
+      const { sendRequest } = useAxios();
+      const response = await sendRequest({});
       // facciamo il login in automatico (?)
       this.login(form);
       // ritorniamo true in caso di settaggio del token positivo

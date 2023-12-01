@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-export function useAxios() {
+export const useAxios = () => {
   // creare istanza di axios
   const instance = axios.create({
     baseURL: "http://localhost:8080",
@@ -26,8 +26,8 @@ export function useAxios() {
     config: AxiosRequestConfig,
     defaultValue = null as null | any
   ) => {
-    defaultValue ? defaultValue : instance.request(config);
+    return defaultValue ? defaultValue : instance.request(config);
   };
 
   return { sendRequest };
-}
+};

@@ -5,15 +5,25 @@ import { useRoomsStore } from "../../stores/rooms";
 import { useDayjs } from "../../composables/index";
 
 // importare RoomCard, HeaderVue, IconInput, Content
-
+import RoomCard from "../../components/cards/RoomCard.vue";
+import HeaderVue from "../../components/ui/Header.vue";
+import IconInput from "../../components/inputs/IconInput.vue";
+import Content from "../../components/ui/Content.vue";
 const searchMap = ref(new Map());
 const initialDayToBook = ref("");
 const roomsStore = useRoomsStore();
 const { dayJs } = useDayjs();
 function updateMap(key, value) {
   // inserire logica per popolare la mappa searchMap
+  searchMap.value.set(key, value);
 }
 // popolare initialDayToBook con l'ultimo giorno cercato
+onMounted(() => {
+  const dayToBook = localStorage.getItem("day_to_book");
+  if (dayToBook) {
+    initialDayToBook.value = dayToBook;
+  }
+});
 
 function getRooms() {
   if (!searchMap.value.get("day_to_book")) return;

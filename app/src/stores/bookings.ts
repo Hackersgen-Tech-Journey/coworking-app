@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Booking } from "./models/booking";
 import { bookings } from "./data/bookings";
+import { useAxios } from "@/composables/useAxios";
 
 export const useBookingsStore = defineStore("bookings-store", {
   state: () => ({
@@ -16,22 +17,28 @@ export const useBookingsStore = defineStore("bookings-store", {
         id: "1",
         created_at: "2023",
       } as Booking;
-      this.bookings.push(booking);
+      const { sendRequest } = useAxios();
+      const response = await sendRequest({}, booking);
+      this.bookings.push(response);
       // ritorniamo true se la chiamata è andata a buon fine X
       return true;
     },
     async getBookings() {
       // facciamo una chiamata per popolare le prenotazioni fatte
       // popoliamo lo store in caso positivo
-      this.bookings = bookings;
+      const { sendRequest } = useAxios();
+      const response = await sendRequest({}, bookings);
+      this.bookings = response;
       // ritorniamo true se la chiamata è andata a buon fine
       return true;
     },
     async getBookingDetail(id) {
       // facciamo una chiamata per accedere al dettaglio della prenotazione
       const booking = bookings.find((booking) => booking.id === id);
+      const { sendRequest } = useAxios();
+      const response = await sendRequest({}, booking);
       // popoliamo lo store in caso positivo
-      this.bookingDetail = booking;
+      this.bookingDetail = response;
     },
     async deleteBooking(id) {
       // facciamo una chiamata per eliminare la prenotazione

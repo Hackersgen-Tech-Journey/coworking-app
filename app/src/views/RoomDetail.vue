@@ -6,10 +6,14 @@ import { useBookingsStore } from "../stores/bookings";
 import Carousel from "../components/ui/Carousel.vue";
 import { ref } from "vue";
 import { useDayjs } from "../composables";
+import { useRoute } from "vue-router";
+import router from "../router";
 const roomStore = useRoomsStore();
 const bookingStore = useBookingsStore();
 
 // carica il dettaglio della stanza tramite l'roomId presente nella route
+const route = useRoute();
+roomStore.getRoomDetail(route.params.roomId);
 
 const { dayJs } = useDayjs();
 const bookedDay = ref(
@@ -30,6 +34,9 @@ async function bookDay() {
     currentDay
   );
   // in caso di risposta affermativa manda l'utente sulla pagina 'my-bookings'
+  if (response) {
+    router.push({ name: "my-bookings" });
+  }
 }
 </script>
 <template>
