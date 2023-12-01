@@ -18,9 +18,9 @@ import router from "./router";
 // 3) Configurare composables:
 //  3.1) Sistemare axios X
 // 4) Routing:
-//  4.1) Sistemare layouts
-//  4.2) Sistemare pagine
-//  4.3) Sistemare guards
+//  4.1) Sistemare layouts X
+//  4.2) Sistemare pagine X
+//  4.3) Sistemare guards X
 // 5) Sistemare componenti:
 //  5.1) Risolvere imports
 //  5.2) Sistemare logica login form
@@ -40,6 +40,6 @@ import router from "./router";
 //  7.4) Sistemare rooms store per usare be
 
 const app = createApp(App);
-app.use(createPinia);
+app.use(createPinia());
 app.use(router);
 app.mount("#app");
