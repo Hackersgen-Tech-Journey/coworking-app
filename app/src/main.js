@@ -16,7 +16,7 @@ import router from "./router";
 //  2.2) Sistemare store di prenotazioni X
 //  2.3) Sistemare store di stanze X
 // 3) Configurare composables:
-//  3.1) Sistemare axios
+//  3.1) Sistemare axios X
 // 4) Routing:
 //  4.1) Sistemare layouts
 //  4.2) Sistemare pagine
