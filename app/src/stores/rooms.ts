@@ -15,7 +15,9 @@ export const useRoomsStore = defineStore("rooms-store", {
       const response = await sendRequest({
         url: "/rooms",
         method: "GET",
-        data: body,
+        params: {
+          ...body,
+        },
       } as AxiosRequestConfig);
       const { data } = response;
       this.rooms = data;
