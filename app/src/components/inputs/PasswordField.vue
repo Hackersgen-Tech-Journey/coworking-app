@@ -23,13 +23,14 @@ watch(
   <div class="flex flex-col gap-2 w-full">
     <div class="font-instrument">{{ text }}</div>
     <div class="border border-black p-3 rounded-xl w-full flex flex-row">
+      <!-- ofuscare password in base al valore di obfuscate -->
       <input
         class="flex-1 focus:outline-none"
-        :type="obfuscate ? 'password' : 'text'"
         v-model="value"
         :placeholder="props.placeholder"
       />
-      <div @click="() => (obfuscate = !obfuscate)">
+      <!-- cambiare valore di obfuscate nell'opposto al click -->
+      <div>
         <Eye :color="!obfuscate ? '#42B0A0' : '#bababa'"></Eye>
       </div>
     </div>

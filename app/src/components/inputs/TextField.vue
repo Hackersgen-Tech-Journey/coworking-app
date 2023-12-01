@@ -12,6 +12,8 @@ const props = defineProps({
 });
 const value = ref("");
 const emit = defineEmits(["onChangedValue"]);
+
+// aggiungere watch per emittare il valore presente nell'input
 watch(
   () => value.value,
   (value) => emit("onChangedValue", value)

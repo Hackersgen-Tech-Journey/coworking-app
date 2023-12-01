@@ -1,8 +1,5 @@
 import { defineStore } from "pinia";
-import { useAxios } from "../composables/useAxios";
-import { bookings } from "./data/bookings";
 import { Booking } from "./models/booking";
-import { AxiosError } from "axios";
 
 export const useBookingsStore = defineStore("bookings-store", {
   state: () => ({
@@ -10,52 +7,22 @@ export const useBookingsStore = defineStore("bookings-store", {
     bookingDetail: null,
   }),
   actions: {
-    async createBooking(room_id, booked_on): Promise<boolean> {
-      const { sendRequest } = useAxios();
-      const response = await sendRequest({
-        url: "/bookings",
-        method: "POST",
-        data: {
-          room_id,
-          booked_on,
-        },
-      });
-      if (response && response instanceof AxiosError) {
-        return false;
-      }
-      return true;
+    async createBooking(room_id, booked_on) {
+      // facciamo una chiamata per creare una prenotazione
+      // ritorniamo true se la chiamata è andata a buon fine
     },
     async getBookings() {
-      const { sendRequest } = useAxios();
-      const response = await sendRequest({
-        url: "/bookings",
-        method: "GET",
-      });
-      const { data } = response;
-      this.bookings = data;
+      // facciamo una chiamata per popolare le prenotazioni fatte
+      // popoliamo lo store in caso positivo
+      // ritorniamo true se la chiamata è andata a buon fine
     },
     async getBookingDetail(id) {
-      const { sendRequest } = useAxios();
-      const response = await sendRequest({
-        url: "/bookings/" + id,
-        method: "GET",
-      });
-      const { data } = response;
-      this.bookingDetail = data;
+      // facciamo una chiamata per accedere al dettaglio della prenotazione
+      // popoliamo lo store in caso positivo
     },
     async deleteBooking(id) {
-      const { sendRequest } = useAxios();
-      const response = await sendRequest({
-        url: "/bookings/" + id,
-        method: "DELETE",
-      });
-      if (response && response instanceof AxiosError) {
-        return;
-      }
-      const oldBookings = [...this.bookings];
-      const index = this.bookings.findIndex((value) => value.id == id);
-      oldBookings.splice(index, 1);
-      this.bookings = oldBookings;
+      // facciamo una chiamata per eliminare la prenotazione
+      // in caso positivo eliminiamo la prenotazione da quelle disponibili
     },
   },
   getters: {

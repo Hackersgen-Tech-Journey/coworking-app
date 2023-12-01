@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import { useAxios } from "../composables/useAxios";
 import { Room } from "./models/room";
-import { AxiosRequestConfig } from "axios";
 
 export const useRoomsStore = defineStore("rooms-store", {
   state: () => ({
@@ -11,33 +9,13 @@ export const useRoomsStore = defineStore("rooms-store", {
   }),
   actions: {
     async getRooms(body) {
-      const { sendRequest } = useAxios();
-      const response = await sendRequest({
-        url: "/rooms",
-        method: "GET",
-        params: {
-          ...body,
-        },
-      } as AxiosRequestConfig);
-      const { data } = response;
-      this.rooms = data;
+      // facciamo una chiamata per visualizzare tutte le stanze disponibili
+      // popoliamo lo store in caso positivo
     },
     async getRoomDetail(id) {
-      const { sendRequest } = useAxios();
-
-      const [rooms, photos] = await Promise.all([
-        sendRequest({
-          url: "/rooms/" + id,
-          method: "GET",
-        }),
-        sendRequest({
-          url: "/rooms/" + id + "/photos",
-          method: "GET",
-        }),
-      ]);
-      const { data } = rooms;
-      this.roomDetail = data;
-      this.roomPhotos = photos.data.photos;
+      // facciamo una chiamata per caricare dettaglio della stanza
+      // facciamo una chiamata per caricare le foto della stanza
+      // popoliamo lo store in caso positivo
     },
   },
   getters: {

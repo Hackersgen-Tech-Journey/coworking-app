@@ -1,22 +1,13 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 export function useAxios() {
-  const instance = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8080",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  instance.interceptors.request.use((config) => {
-    const token = localStorage.getItem("coworking-token");
-    if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
-    }
-    return config;
-  });
+  // creare istanza di axios
 
-  const sendRequest = (config: AxiosRequestConfig) => instance.request(config);
+  // aggiungere interceptor per aggiungere token di autenticazione
 
-  return { sendRequest };
+  // scrivere metodo sendRequest che fa una richiesta con axios
+  // passandogli come primo parametro una configurazione di axios
+  // passandogli come secondo parametro un valore default di ritorno
+
+  return;
 }

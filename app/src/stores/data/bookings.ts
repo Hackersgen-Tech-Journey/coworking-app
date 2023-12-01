@@ -1,3 +1,5 @@
+import { Booking } from "../models/booking";
+
 const bookings = [
   {
     id: "d290f1ee-6c54-4b01-90e6-d701748f0851",
@@ -29,6 +31,6 @@ const bookings = [
     created_at: "2023-10-06T16:20:00.000",
     booked_on: "2023-10-12",
   },
-];
+] as Array<Booking>;
 
 export { bookings };

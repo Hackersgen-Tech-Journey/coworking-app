@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import Content from "../../components/ui/Content.vue";
-import HeaderVue from "../../components/ui/Header.vue";
+// sistemare import di Content e HeaderVue
 import { useDayjs } from "../../composables";
 import { useBookingsStore } from "../../stores/bookings";
 const bookingsStore = useBookingsStore();
-bookingsStore.getBookings();
+// caricare le prenotazioni quando carico questa pagina per la prima volta
 const { dayJs } = useDayjs();
 </script>
 <template>

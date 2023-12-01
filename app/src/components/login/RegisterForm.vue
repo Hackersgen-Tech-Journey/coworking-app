@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { useAuthStore } from "../../stores/auth";
 import PasswordField from "../inputs/PasswordField.vue";
 import TextField from "../inputs/TextField.vue";
 import { ref } from "vue";
-
-const authStore = useAuthStore();
-const router = useRouter();
+// importare authStore
+// importare router
 const registerMap = ref(new Map());
 function updateForm(key, value) {
   registerMap.value.set(key, value);
 }
 async function register() {
-  const response = await authStore.register(
-    Object.fromEntries(registerMap.value.entries())
-  );
-  if (response) {
-    router.push({ name: "home" });
-  }
+  // chiamare metodo di registrazione con come valore registerMap trasformata in oggetto
+  // in caso di risposta affermativa fare redirect su home
 }
 </script>
 <template>

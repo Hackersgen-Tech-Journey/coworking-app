@@ -1,3 +1,5 @@
+import { Room } from "../models/room";
+
 const rooms = [
   {
     id: "d290f1ee-6c54-4b01-90e6-d701748f0851",
@@ -5,7 +7,7 @@ const rooms = [
     cost: 30,
     number_of_seats: 5,
     category: "Sala riunioni",
-    is_available: true,
+    IsAvailable: true,
     main_photo:
       "https://flawless.life/wp-content/uploads/2018/01/copernico-milano-cover.jpg",
   },
@@ -15,7 +17,7 @@ const rooms = [
     cost: 50,
     number_of_seats: 10,
     category: "Sala conferenze",
-    is_available: false,
+    IsAvailable: false,
     main_photo:
       "https://flawless.life/wp-content/uploads/2018/01/copernico-milano-cover.jpg",
   },
@@ -25,7 +27,7 @@ const rooms = [
     cost: 20,
     number_of_seats: 3,
     category: "Ufficio Privato",
-    is_available: true,
+    IsAvailable: true,
     main_photo:
       "https://flawless.life/wp-content/uploads/2018/01/copernico-milano-cover.jpg",
   },
@@ -35,7 +37,7 @@ const rooms = [
     cost: 40,
     number_of_seats: 7,
     category: "Studio di design",
-    is_available: false,
+    IsAvailable: false,
     main_photo:
       "https://flawless.life/wp-content/uploads/2018/01/copernico-milano-cover.jpg",
   },
@@ -45,10 +47,10 @@ const rooms = [
     cost: 35,
     number_of_seats: 6,
     category: "Sala polivalente",
-    is_available: true,
+    IsAvailable: true,
     main_photo:
       "https://flawless.life/wp-content/uploads/2018/01/copernico-milano-cover.jpg",
   },
-];
+] as Array<Room>;
 
 export { rooms };

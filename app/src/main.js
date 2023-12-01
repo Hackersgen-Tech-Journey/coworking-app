@@ -4,12 +4,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { createApp } from "vue";
+import App from "./App.vue";
 import { createPinia } from "pinia";
-
+import router from "./router";
 // Esercizi:
 // 1) Configurare app vue:
-//  1.1) Aggiungere pinia
-//  1.2) Aggiungere router
+//  1.1) Aggiungere pinia X
+//  1.2) Aggiungere router X
 // 2) Configurare stores:
 //  2.1) Sistemare store di autenticazione
 //  2.2) Sistemare store di prenotazioni
@@ -38,14 +39,7 @@ import { createPinia } from "pinia";
 //  7.3) Sistemare bookings store per usare be
 //  7.4) Sistemare rooms store per usare be
 
-import App from "./App.vue";
-import router from "./router";
-import { useAuthStore } from "./stores/auth";
-
 const app = createApp(App);
-
 app.use(createPinia());
 app.use(router);
-const authStore = useAuthStore();
-authStore.init();
 app.mount("#app");

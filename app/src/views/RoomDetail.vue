@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router";
 import Content from "../components/ui/Content.vue";
 import HeaderVue from "../components/ui/Header.vue";
 import { useRoomsStore } from "../stores/rooms";
@@ -9,9 +8,9 @@ import { ref } from "vue";
 import { useDayjs } from "../composables";
 const roomStore = useRoomsStore();
 const bookingStore = useBookingsStore();
-const route = useRoute();
-const router = useRouter();
-roomStore.getRoomDetail(route.params.roomId);
+
+// carica il dettaglio della stanza tramite l'roomId presente nella route
+
 const { dayJs } = useDayjs();
 const bookedDay = ref(
   localStorage.getItem("day_to_book")
@@ -30,9 +29,7 @@ async function bookDay() {
     roomStore.roomDetailGetter.id,
     currentDay
   );
-  if (response) {
-    router.push({ name: "my-bookings" });
-  }
+  // in caso di risposta affermativa manda l'utente sulla pagina 'my-bookings'
 }
 </script>
 <template>
