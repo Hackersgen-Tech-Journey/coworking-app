@@ -22,12 +22,12 @@ import router from "./router";
 //  4.2) Sistemare pagine X
 //  4.3) Sistemare guards X
 // 5) Sistemare componenti:
-//  5.1) Risolvere imports
-//  5.2) Sistemare logica login form
-//  5.3) Sistemare TextField
-//  5.4) Sistemare PasswordField
-//  5.5) Sistemare IconInput
-//  5.5) Sistemare Content
+//  5.1) Risolvere imports X
+//  5.2) Sistemare logica login form X
+//  5.3) Sistemare TextField X
+//  5.4) Sistemare PasswordField X
+//  5.5) Sistemare IconInput X
+//  5.5) Sistemare Content X
 // 6) Sistemare pagine:
 //  6.1) Sistemare LoginView
 //  6.2) Sistemare Home

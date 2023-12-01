@@ -27,10 +27,11 @@ watch(
       <input
         class="flex-1 focus:outline-none"
         v-model="value"
+        :type="obfuscate ? 'password' : 'text'"
         :placeholder="props.placeholder"
       />
       <!-- cambiare valore di obfuscate nell'opposto al click -->
-      <div>
+      <div @click="() => (obfuscate = !obfuscate)">
         <Eye :color="!obfuscate ? '#42B0A0' : '#bababa'"></Eye>
       </div>
     </div>
