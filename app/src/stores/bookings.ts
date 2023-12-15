@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { Booking } from "./models/booking";
-import { bookings } from "./data/bookings";
 import { useAxios } from "../composables/useAxios";
+import { AxiosError } from "axios";
 
 export const useBookingsStore = defineStore("bookings-store", {
   state: () => ({
@@ -17,6 +17,10 @@ export const useBookingsStore = defineStore("bookings-store", {
         method: "POST",
         data: { room_id, booked_on },
       });
+
+      if (response instanceof AxiosError) {
+        return false;
+      }
       this.getBookings();
       // ritorniamo true se la chiamata è andata a buon fine X
       return true;
@@ -29,8 +33,10 @@ export const useBookingsStore = defineStore("bookings-store", {
         url: "bookings",
         method: "GET",
       });
-      const { data } = response;
-      this.bookings = data;
+      if (response instanceof AxiosError) {
+        return false;
+      }
+      this.bookings = response;
       // ritorniamo true se la chiamata è andata a buon fine
       return true;
     },
@@ -42,8 +48,10 @@ export const useBookingsStore = defineStore("bookings-store", {
         method: "GET",
       });
       // popoliamo lo store in caso positivo
-      const { data } = response;
-      this.bookingDetail = data;
+      if (response instanceof AxiosError) {
+        return;
+      }
+      this.bookingDetail = response;
     },
     async deleteBooking(id) {
       // facciamo una chiamata per eliminare la prenotazione
@@ -53,6 +61,9 @@ export const useBookingsStore = defineStore("bookings-store", {
         url: "bookings/" + id,
         method: "DELETE",
       });
+      if (response instanceof AxiosError) {
+        return;
+      }
       const oldBookings = [...this.bookings];
       const index = oldBookings.findIndex((value) => value.id === id);
       oldBookings.splice(index, 1);

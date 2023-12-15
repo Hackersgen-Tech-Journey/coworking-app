@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { Room } from "./models/room";
-import { rooms } from "./data/rooms";
 import { useAxios } from "../composables/useAxios";
+import { AxiosError } from "axios";
 
 export const useRoomsStore = defineStore("rooms-store", {
   state: () => ({
@@ -18,28 +18,38 @@ export const useRoomsStore = defineStore("rooms-store", {
         url: "rooms",
         method: "GET",
       });
-      const { data } = response;
-      this.rooms = data;
+      if (response instanceof AxiosError) {
+        return false;
+      }
+      this.rooms = response;
       // popoliamo lo store in caso positivo X
       return true;
     },
     async getRoomDetail(id) {
       // facciamo una chiamata per caricare dettaglio della stanza
       const { sendRequest } = useAxios();
-      const response = await sendRequest({
-        url: "rooms/" + id,
-        method: "GET",
-      });
-      // facciamo una chiamata per caricare le foto della stanza
-      const responsePhotos = await sendRequest({
-        url: "rooms/" + id + "/photos",
-        method: "GET",
-      });
+
+      const [roomDetailResponse, roomPhotosResponse] = await Promise.all([
+        sendRequest({
+          url: "rooms/" + id,
+          method: "GET",
+        }),
+        sendRequest({
+          url: "rooms/" + id + "/photos",
+          method: "GET",
+        }),
+      ]);
+
+      if (
+        roomDetailResponse instanceof AxiosError ||
+        roomPhotosResponse instanceof AxiosError
+      ) {
+        return;
+      }
 
       // popoliamo lo store in caso positivo
-      const { data } = response;
-      this.roomDetail = data;
-      this.roomPhotos = responsePhotos.data.photos;
+      this.roomDetail = roomDetailResponse;
+      this.roomPhotos = roomPhotosResponse.photos;
     },
   },
   getters: {

@@ -13,6 +13,7 @@ const searchMap = ref(new Map());
 const initialDayToBook = ref("");
 const roomsStore = useRoomsStore();
 const { dayJs } = useDayjs();
+const interval = ref(setInterval(() => getRooms(), 5000));
 function updateMap(key, value) {
   // inserire logica per popolare la mappa searchMap
   searchMap.value.set(key, value);
@@ -28,7 +29,9 @@ onMounted(() => {
 });
 
 function getRooms() {
+  console.log("Sono stato eseguito");
   if (!searchMap.value.get("day_to_book")) return;
+  console.log("Ho cercato le stanze");
   localStorage.setItem("day_to_book", searchMap.value.get("day_to_book"));
   roomsStore.getRooms(Object.fromEntries(searchMap.value));
 }

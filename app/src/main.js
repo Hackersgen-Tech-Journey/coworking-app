@@ -41,11 +41,11 @@ import router from "./router";
 //  7.4) Sistemare rooms store per usare be X
 // BONUS
 // 8) Rifiniture:
-//  8.1) Gestire meglio il composable di axios
-//  8.2) Gestire gli errori del backend
-//  8.3) Caricare i dati ogni n secondi
-//  8.4) Gestire logout
-//  8.5) Preparare l'applicativo al deploy
+//  8.1) Gestire meglio il composable di axios X
+//  8.2) Gestire gli errori del backend X
+//  8.3) Caricare i dati ogni n secondi X
+//  8.4) Gestire logout X
+//  8.5) Preparare l'applicativo al deploy X
 
 const app = createApp(App);
 app.use(createPinia());

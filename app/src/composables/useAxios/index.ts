@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 export const useAxios = () => {
   // creare istanza di axios
   const instance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: import.meta.env.VITE_BACKEND_URL,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -22,11 +22,13 @@ export const useAxios = () => {
   // passandogli come primo parametro una configurazione di axios
   // passandogli come secondo parametro un valore default di ritorno
 
-  const sendRequest = (
-    config: AxiosRequestConfig,
-    defaultValue = null as null | any
-  ) => {
-    return defaultValue ? defaultValue : instance.request(config);
+  const sendRequest = async (config: AxiosRequestConfig) => {
+    try {
+      const { data } = await instance.request(config);
+      return data;
+    } catch (error) {
+      return error;
+    }
   };
 
   return { sendRequest };
