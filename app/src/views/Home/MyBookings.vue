@@ -21,6 +21,12 @@ onMounted(() => {
       <div class="flex flex-col w-full pb-10">
         <div
           class="w-full h-16 border-b border-b-black border-opacity-30 flex flex-row justify-between items-center"
+          v-if="!bookingsStore.bookingsGetter.length"
+        >
+          Nessuna prenotazione
+        </div>
+        <div
+          class="w-full h-16 border-b border-b-black border-opacity-30 flex flex-row justify-between items-center"
           v-for="booking in bookingsStore.bookingsGetter"
         >
           <div>

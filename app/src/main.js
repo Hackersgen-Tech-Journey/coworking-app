@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createPinia } from "pinia";
+import { useAuthStore } from "@/stores/auth";
 import router from "./router";
 // Esercizi:
 // 1) Configurare app vue:
@@ -32,14 +33,16 @@ import router from "./router";
 //  6.1) Sistemare LoginView X
 //  6.2) Sistemare Home X
 //  6.3) Sistemare RoomDetail X
-//  6.4) Sistemare MyBookings
+//  6.4) Sistemare MyBookings X
 // 7) Colleghiamoci al BE:
-//  7.1) Autentichiamoci con il be
-//  7.2) Aggiungere token su axios
-//  7.3) Sistemare bookings store per usare be
-//  7.4) Sistemare rooms store per usare be
+//  7.1) Autentichiamoci con il be X
+//  7.2) Aggiungere token su axios X
+//  7.3) Sistemare bookings store per usare be X
+//  7.4) Sistemare rooms store per usare be X
 
 const app = createApp(App);
 app.use(createPinia());
 app.use(router);
+const authStore = useAuthStore();
+authStore.init();
 app.mount("#app");

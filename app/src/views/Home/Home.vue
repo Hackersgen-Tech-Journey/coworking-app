@@ -22,6 +22,8 @@ onMounted(() => {
   const dayToBook = localStorage.getItem("day_to_book");
   if (dayToBook) {
     initialDayToBook.value = dayToBook;
+    updateMap("day_to_book", dayToBook);
+    getRooms();
   }
 });
 
